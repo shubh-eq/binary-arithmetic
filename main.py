@@ -1,3 +1,24 @@
+def divide_binary(num,divident):
+    if(divident==0):
+        return []
+    lis=convert_to_binary(num)
+    result=[]
+    itr=0
+    cur_divi=0
+    while(itr<len(lis)):
+        cur_divi=2*cur_divi+lis[itr]
+        if(cur_divi>=divident):
+            cur_divi=cur_divi-divident
+            result.append(1)
+        else:
+            result.append(0) 
+        itr+=1
+
+    if (num>0 and divident>0) or (num<0 and divident<0):
+        return result    
+
+    return twoscompliment(result)           
+
 def multiply_binary(n1,n2):
     result=[0]*32
     num1 = convert_to_binary(abs(n1))
@@ -138,6 +159,8 @@ def main():
     # print("Performing Subtraction:\n")
     # result_subtract = subtract_binary_numbers(num1,num2)
     # print(result_subtract,'\n')
-    print(multiply_binary(num1,num2))
+
+    #print(multiply_binary(num1,num2))
+    print(divide_binary(num1,num2))
 
 main()

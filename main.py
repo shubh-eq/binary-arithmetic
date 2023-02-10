@@ -11,7 +11,14 @@ def convertPos(n):
         l.append(n%2)
         n=n//2
     l.reverse()
-    return l
+    l_32 = [0]*32
+    n_len = len(l) -1
+    i = 0
+    while(i<=n_len):
+        l_32[31-n_len+i] = l[i]
+        i+=1
+
+    return l_32
 
 def convert_to_binary(n):
     lis=convertPos(abs(n))

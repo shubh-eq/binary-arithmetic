@@ -56,26 +56,29 @@ def convert_to_binary(n):
     if(n>=0):
         return lis
 
+
     for i in range(len(lis)):
         lis[i]=(lis[i]+1)%2
     t=len(lis)-1
     c=1
-    while t!=len(lis) and c==1:
+    while t>=0 and c==1:
         if lis[t]==0:
             c=0
             lis[t]=1
-        t=t+1  
+        else:
+            lis[t]=0    
+        t=t-1
     return lis      
 
 
 def main():
     num1 = 1 #int(input("Enter First Number:"))
-    num2 = 1 #int((input("Enter Second Number")))
+    num2 = 2 #int((input("Enter Second Number")))
     list1 = convert_to_binary(num1)
     list2 = convert_to_binary(num2)
-
-    result_add = add_binary(list1,list2)
-    print(result_add)
+    print(list2)
+    # result_add = add_binary(list1,list2)
+    # print(result_add)
     # binaryToDecimal(result_add)
 
 

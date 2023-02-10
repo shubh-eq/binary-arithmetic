@@ -13,8 +13,11 @@ def convertPos(n):
     l.reverse()
     return l
 
-def convertNeg(n):
-    lis=convertPos(n*-1)
+def convert_to_binary(n):
+    lis=convertPos(abs(n))
+    if(n>=0):
+        return lis
+
     for i in range(len(lis)):
         lis[i]=(lis[i]+1)%2
     t=len(lis)-1
@@ -28,13 +31,13 @@ def convertNeg(n):
 
 
 def main():
-    num1 =-7 #int(input("Enter First Number:"))
-    num2 = 22#int((input("Enter Second Number")))
-    l1=[]
-    l2=[]
-    # print(convertPos(num1))
-    print(convertNeg(num1))
+    num1 = 7 #int(input("Enter First Number:"))
+    num2 = 22 #int((input("Enter Second Number")))
+    list1 = convert_to_binary(num1)
+    list2 = convert_to_binary(num2)
 
-    #print(l1)
+    result_add = add_binary(list1,list2)
+
+
 
 main()

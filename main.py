@@ -1,16 +1,38 @@
+def multiply_binary(n1,n2):
+    result=[0]*32
+    num1 = convert_to_binary(n1)
+    num2 = convert_to_binary(n2)
+
+    i2=len(num2)-1
+    i1=len(num1)-1
+    indr=31
+    while i2>=0:
+        rowres=[0]*32
+        k=indr
+        if num2[i2]==1:
+            i1=len(num1)-1
+            while i1>=0:
+                rowres[k]=num1[i1]
+                i1-=1
+                k-=1
+            result=add_binary_numbers(result,rowres)    
+        indr-=1
+        i2-=1
+    return result      
 
 
-def add_binary_numbers(num1,num2):
+
+def add_binary_numbers(list1,list2):
     """Takes two numbers as input and performs addition"""
 
     #Converts to binary and gets results in list
-    list1 = convert_to_binary(num1)
-    list2 = convert_to_binary(num2)
+    # list1 = convert_to_binary(num1)
+    # list2 = convert_to_binary(num2)
 
     itr=31
     carry=0
-    print("1st Input:",list1)
-    print("2nd Input:",list2)
+    # print("1st Input:",list1)
+    # print("2nd Input:",list2)
 
     result=[]
     while itr>=0:
@@ -104,13 +126,13 @@ def main():
     num1 = int(input("Enter First Number:"))
     num2 = int((input("Enter Second Number:")))
 
-    print("Performing Addition:\n")
-    result_add = add_binary_numbers(num1,num2)
-    print(result_add,'\n')
+    # print("Performing Addition:\n")
+    # result_add = add_binary_numbers(num1,num2)
+    # print(result_add,'\n')
 
-    print("Performing Subtraction:\n")
-    result_subtract = subtract_binary_numbers(num1,num2)
-    print(result_subtract,'\n')
-
+    # print("Performing Subtraction:\n")
+    # result_subtract = subtract_binary_numbers(num1,num2)
+    # print(result_subtract,'\n')
+    print(multiply_binary(num1,num2))
 
 main()

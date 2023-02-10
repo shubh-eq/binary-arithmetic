@@ -1,12 +1,10 @@
 
 
-
 def add_binary(num1,num2):
     i=31
     c=0
     print(num1)
     print(num2)
-
     result=[]
     while i>=0:
         t=num1[i]+num2[i]+c
@@ -21,6 +19,16 @@ def add_binary(num1,num2):
             c=1
         i=i-1
     result.reverse()
+    return result
+
+
+def subtract_binary(num1,num2):
+    """Performs Subtraction: num1-num2"""
+    num2 = -1*num2
+    list1 = convert_to_binary(num1)
+    list2 = convert_to_binary(num2)
+
+    result = add_binary(num1,num2)
     return result
 
 
@@ -55,7 +63,7 @@ def convert_to_binary(n):
     lis=convertPos(abs(n))
     if(n>=0):
         return lis
-
+    
     for i in range(len(lis)):
         lis[i]=(lis[i]+1)%2
     t=len(lis)-1
@@ -69,8 +77,8 @@ def convert_to_binary(n):
 
 
 def main():
-    num1 = 1 #int(input("Enter First Number:"))
-    num2 = 1 #int((input("Enter Second Number")))
+    num1 = -4 #int(input("Enter First Number:"))
+    num2 = -4 #int((input("Enter Second Number")))
     list1 = convert_to_binary(num1)
     list2 = convert_to_binary(num2)
 

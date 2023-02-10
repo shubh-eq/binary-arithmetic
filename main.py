@@ -2,10 +2,8 @@
 
 
 def add_binary(num1,num2):
-    pass
-
-
-
+    result = []
+    
 
 def convertPos(n):
     l = []

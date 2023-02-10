@@ -1,7 +1,7 @@
 def multiply_binary(n1,n2):
     result=[0]*32
-    num1 = convert_to_binary(n1)
-    num2 = convert_to_binary(n2)
+    num1 = convert_to_binary(abs(n1))
+    num2 = convert_to_binary(abs(n2))
 
     i2=len(num2)-1
     i1=len(num1)-1
@@ -18,7 +18,11 @@ def multiply_binary(n1,n2):
             result=add_binary_numbers(result,rowres)    
         indr-=1
         i2-=1
-    return result      
+
+    if (n1>0 and n2>0) or (n1<0 and n2<0):
+        return result    
+
+    return twoscompliment(result)      
 
 
 
@@ -94,6 +98,23 @@ def convertion_helper(n):
 
     return list_32
 
+def twoscompliment(list):
+    #One's Compliment (Inverting Bits)
+    for i in range(len(list)):
+        list[i]=(list[i]+1)%2
+    
+    itr=len(list)-1
+    carry=1
+    while itr>=0 and carry==1:
+        if list[itr]==0:
+            carry=0
+            list[itr]=1
+        else:
+            list[itr]=0    
+        itr=itr-1
+    return list    
+
+
 def convert_to_binary(n):
     """Takes a number as input and converts to binary"""
 
@@ -103,23 +124,7 @@ def convert_to_binary(n):
     if(n>=0):
         return list_
         
-
-    #One's Compliment (Inverting Bits)
-    for i in range(len(list_)):
-        list_[i]=(list_[i]+1)%2
-
-    #Two's Compliment (Adding one)
-    itr=len(list_)-1
-    carry=1
-    while itr>=0 and carry==1:
-        if list_[itr]==0:
-            carry=0
-            list_[itr]=1
-        else:
-            list_[itr]=0    
-        itr=itr-1
-
-    return list_      
+    return twoscompliment(list_)    
 
 
 def main():

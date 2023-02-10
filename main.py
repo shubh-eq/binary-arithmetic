@@ -14,7 +14,7 @@ def add_binary_numbers(num1,num2):
 
     result=[]
     while itr>=0:
-        t=list1[itr]+list2[itr]+carry
+        t = list1[itr] + list2[itr] + carry 
         if (t==0) or (t==1):
             result.append(t)
             carry=0
@@ -63,20 +63,24 @@ def convertion_helper(n):
 
     list_32 = [0]*32
 
-    n_len = len(list_) -1
+    #Creating 32-bits length list
+    list_len = len(list_) -1
     i = 0
-    while(i<=n_len):
-        list_32[31-n_len+i] = list_[i]
+    while(i<=list_len):
+        list_32[31-list_len+i] = list_[i]
         i+=1
 
     return list_32
 
 def convert_to_binary(n):
     """Takes a number as input and converts to binary"""
+
     list_=convertion_helper(abs(n))
 
+    #Returns if input is positive
     if(n>=0):
         return list_
+        
 
     #One's Compliment (Inverting Bits)
     for i in range(len(list_)):
@@ -97,12 +101,14 @@ def convert_to_binary(n):
 
 
 def main():
-    num1 = 4 #int(input("Enter First Number:"))
-    num2 = -2 #int((input("Enter Second Number")))
+    num1 = int(input("Enter First Number:"))
+    num2 = int((input("Enter Second Number:")))
 
+    print("Performing Addition:\n")
     result_add = add_binary_numbers(num1,num2)
     print(result_add,'\n')
 
+    print("Performing Subtraction:\n")
     result_subtract = subtract_binary_numbers(num1,num2)
     print(result_subtract,'\n')
 

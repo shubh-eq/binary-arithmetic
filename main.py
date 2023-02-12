@@ -105,25 +105,28 @@ class BinaryArithmetic:
         return result
 
     
-    def sub_binary(self):
+    def sub_binary(self,list1=None,list2=None):
         """Performs Binary Addition taking two lists and returns result"""
 
         #Performing num1 - num2 
-        neg_list2 = self.__convert_to_binary(-1*self.num2) 
+        if list1==None and list2==None:
+            neg_list2 = self.__convert_to_binary(-1*self.num2) 
+        else:
+            neg_list2 = self.__generate_2s_compliment(list2)
 
         result = self.add_binary(self.list1,neg_list2)
         return result
 
 
-    def multiply_binary(self,list1=None,list2=None):
+    def multiply_binary(self,num1,num2):
         """Performs Binary Multiplication taking two lists and returns result"""
-        result=[0]*32
 
-        if(list1==None):
-            list1 = self.list1
+        list1 = self.__convert_to_binary(abs(num1))
+
+        list2 = self.__convert_to_binary(abs(num2))
         
-        if(list2==None):
-            list2 = self.list2
+
+        result=[0]*32
 
         i1=len(list1)-1
         i2=len(list2)-1
@@ -142,7 +145,7 @@ class BinaryArithmetic:
             itr-=1
             i2-=1
 
-        if (self.num1>0 and self.num2>0) or (self.num1<0 and self.num2<0):
+        if (num1>0 and num2>0) or (num1<0 and num2<0):
             return result    
 
         return self.__generate_2s_compliment(result)   
@@ -153,11 +156,12 @@ class BinaryArithmetic:
         result=[]
         itr=0
         cur_divi=0
-
-        while(itr<len(self.list1)):
-            cur_divi = 2*cur_divi + self.list1[itr]
-            if(cur_divi>=self.num2):
-                cur_divi=cur_divi-self.num2
+        list1=self.__convert_to_binary(abs(self.num1))
+        num2=abs(self.num2)
+        while(itr<len(list1)):
+            cur_divi = 2*cur_divi + list1[itr]
+            if(cur_divi>=num2):
+                cur_divi=cur_divi-num2
                 result.append(1)
             else:
                 result.append(0) 
@@ -166,12 +170,35 @@ class BinaryArithmetic:
         if (self.num1>0 and self.num2>0) or (self.num1<0 and self.num2<0):
             return result    
 
-        return self.__generate_2s_compliment(result)   
+        return self.__generate_2s_compliment(result)
 
     
     def mod_binary(self,modVal):
         pass
 
+
+    def multiply_binaryLists(self,list1,list2):
+        result=[0]*32
+
+        i1=len(list1)-1
+        i2=len(list2)-1
+        # print(list1)
+        # print(list2)
+        itr=31
+        while i2>=0:
+            rowres=[0]*32
+            k=itr
+            if list2[i2]==1:
+                i1=len(list1)-1
+                while i1>=0:
+                    rowres[k]=list1[i1]
+                    i1-=1
+                    k-=1
+                result = self.add_binary(result,rowres)    
+            itr-=1
+            i2-=1
+
+        return result    
 
     def factorial_binary(self,num=None):
         """Performs Factorial on Binary Number"""
@@ -193,7 +220,7 @@ class BinaryArithmetic:
         
         result = self.__convert_to_binary(1)
         for i in range(1,num+1):
-            result = self.multiply_binary(result,self.__convert_to_binary(i))
+            result = self.multiply_binaryLists(result,self.__convert_to_binary(i))
 
         return result
 
@@ -209,17 +236,19 @@ class BinaryArithmetic:
         result = self.__convert_to_binary(1)
 
         for i in range(self.num2):
-            result = self.multiply_binary(result,self.list1)
+            result = self.multiply_binaryLists(result,self.list1)
         
         return result
 
 
     def convert_binary_to_decimal(self,list_):
         """Takes a binary number as list and converts to decimal"""
-        for i in range(0,len(list_)):
-            list_[i] = str(list_[i])
 
-        binary = int("".join(list_))
+        list=[]
+        for i in range(0,len(list_)):
+            list.append(str(list_[i]))
+
+        binary = int("".join(list))
         decimal, i = 0, 0
 
         while(binary != 0):
@@ -229,6 +258,7 @@ class BinaryArithmetic:
             i += 1
 
         return decimal
+
 
 
         
@@ -248,7 +278,7 @@ def main():
     print(result_subtract,'\n')
 
     print("Performing Multiplication:")
-    result_multiply = binary_math.multiply_binary()
+    result_multiply = binary_math.multiply_binary(num1,num2)
     print(result_multiply,'\n')
 
     print("Performing Division:")

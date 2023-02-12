@@ -1,6 +1,3 @@
-
-
-
 class BinaryArithmetic:
     """Arithmetic of two Binary Numbers"""
     num1 = None
@@ -173,8 +170,15 @@ class BinaryArithmetic:
         return self.__generate_2s_compliment(result)
 
     
-    def mod_binary(self,modVal):
-        pass
+    def mod_binary(self):
+        """Performs Binary mod (num1%num2) and returns result"""
+        quotient=self.divide_binary()
+        # res=quotient*self.num2
+        
+        res=self.multiply_binary(self.convert_binary_to_decimal(quotient),self.num2)
+            
+        result=self.sub_binary(self.list1,res)
+        return result     
 
 
     def multiply_binaryLists(self,list1,list2):
@@ -283,6 +287,10 @@ def main():
 
     print("Performing Division:")
     result_divide = binary_math.divide_binary()
+    print(result_divide,'\n')
+
+    print("Performing Modulus:")
+    result_divide = binary_math.mod_binary()
     print(result_divide,'\n')
 
     print("Performing Factorial:")

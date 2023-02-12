@@ -1,5 +1,6 @@
 
 
+
 class BinaryArithmetic:
     """Arithmetic of two Binary Numbers"""
     num1 = None
@@ -17,23 +18,10 @@ class BinaryArithmetic:
         #Returns if input is positive
         if(n>=0):
             return list_
-            
-        #One's Compliment (Inverting Bits)
-        for i in range(len(list_)):
-            list_[i]=(list_[i]+1)%2
 
-        #Two's Compliment (Adding one)
-        itr=len(list_)-1
-        carry=1
-        while itr>=0 and carry==1:
-            if list_[itr]==0:
-                carry=0
-                list_[itr]=1
-            else:
-                list_[itr]=0    
-            itr=itr-1
+        result = self.__generate_2s_compliment(list_)
 
-        return list_   
+        return result   
 
 
     def __convertion_helper(self,n):
@@ -54,6 +42,26 @@ class BinaryArithmetic:
             i+=1
 
         return list_32
+
+    
+    def __generate_2s_compliment(self,list_):
+        """Takes binary number(in list) as input and computes 2s compliment"""
+        #One's Compliment (Inverting Bits)
+        for i in range(len(list_)):
+            list_[i]=(list_[i]+1)%2
+        
+        #Two's Compliment (Adding one)
+        itr=len(list_)-1
+        carry=1
+        while itr>=0 and carry==1:
+            if list_[itr]==0:
+                carry=0
+                list_[itr]=1
+            else:
+                list_[itr]=0    
+            itr=itr-1
+
+        return list_  
 
 
     #Constructor    
@@ -99,17 +107,60 @@ class BinaryArithmetic:
     
     def sub_binary(self):
         """Performs Binary Addition taking two lists and returns result"""
-        neg_list2 = self.__convert_to_binary(-1*self.num2)
+
+        #Performing num1 - num2 
+        neg_list2 = self.__convert_to_binary(-1*self.num2) 
 
         result = self.add_binary(self.list1,neg_list2)
         return result
 
 
     def multiply_binary(self):
-        pass
+        """Performs Binary Multiplication taking two lists and returns result"""
+        result=[0]*32
+
+        i1=len(self.list1)-1
+        i2=len(self.list2)-1
+
+        itr=31
+        while i2>=0:
+            rowres=[0]*32
+            k=itr
+            if self.list2[i2]==1:
+                i1=len(self.list1)-1
+                while i1>=0:
+                    rowres[k]=self.list1[i1]
+                    i1-=1
+                    k-=1
+                result = self.add_binary(result,rowres)    
+            itr-=1
+            i2-=1
+
+        if (self.num1>0 and self.num2>0) or (self.num1<0 and self.num2<0):
+            return result    
+
+        return self.__generate_2s_compliment(result)   
+
 
     def divide_binary(self):
-        pass
+        """Performs Binary Division (num1/num2) and returns result"""
+        result=[]
+        itr=0
+        cur_divi=0
+
+        while(itr<len(self.list1)):
+            cur_divi = 2*cur_divi + self.list1[itr]
+            if(cur_divi>=self.num2):
+                cur_divi=cur_divi-self.num2
+                result.append(1)
+            else:
+                result.append(0) 
+            itr+=1
+
+        if (self.num1>0 and self.num2>0) or (self.num1<0 and self.num2<0):
+            return result    
+
+        return self.__generate_2s_compliment(result)   
 
 
     def convert_binary_to_decimal(self,list_):
@@ -129,64 +180,12 @@ class BinaryArithmetic:
         return decimal
 
 
-
-
-def multiply_binary_numbers(n1,n2):
-    """Takes two binary numbers and multiplies them"""
-
-    result=[0]*32
-    num1 = convert_to_binary(n1)
-    num2 = convert_to_binary(n2)
-
-    i2=len(num2)-1
-    i1=len(num1)-1
-    indr=31
-    while i2>=0:
-        rowres=[0]*32
-        k=indr
-        if num2[i2]==1:
-            i1=len(num1)-1
-            while i1>=0:
-                rowres[k]=num1[i1]
-                i1-=1
-                k-=1
-            result=add_binary_helper(result,rowres)    
-        indr-=1
-        i2-=1
-    return result      
-
-
-
-def add_binary_helper(list1,list2):
-    """Takes two lists (binary) as input and performs addition"""
-
-    itr=31
-    carry=0
-    
-    result=[]
-    while itr>=0:
-        t = list1[itr] + list2[itr] + carry 
-        if (t==0) or (t==1):
-            result.append(t)
-            carry=0
-        elif t==2:
-            result.append(0)
-            carry=1
-        else:
-            result.append(1)
-            carry=1
-        itr=itr-1
-
-    result.reverse()
-    return result
-
-
-
+        
 def main():
     num1 = int(input("Enter First Number:"))
     num2 = int((input("Enter Second Number:")))
 
-    #Creating BinaryArthimetic Object
+    # Creating BinaryArthimetic Object
     binary_math = BinaryArithmetic(num1,num2)
 
     print("Performing Addition:")
@@ -197,9 +196,14 @@ def main():
     result_subtract = binary_math.sub_binary()
     print(result_subtract,'\n')
 
-    # print("Performing Multiplication:\n")
-    # result_multiply = multiply_binary_numbers(num1,num2)
-    # print(result_multiply,'\n')
+    print("Performing Multiplication:")
+    result_multiply = binary_math.multiply_binary()
+    print(result_multiply,'\n')
+
+    print("Performing Division:")
+    result_divide = binary_math.divide_binary()
+    print(result_divide,'\n')
 
 
+ 
 main()

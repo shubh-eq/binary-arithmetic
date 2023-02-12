@@ -115,21 +115,27 @@ class BinaryArithmetic:
         return result
 
 
-    def multiply_binary(self):
+    def multiply_binary(self,list1=None,list2=None):
         """Performs Binary Multiplication taking two lists and returns result"""
         result=[0]*32
 
-        i1=len(self.list1)-1
-        i2=len(self.list2)-1
+        if(list1==None):
+            list1 = self.list1
+        
+        if(list2==None):
+            list2 = self.list2
+
+        i1=len(list1)-1
+        i2=len(list2)-1
 
         itr=31
         while i2>=0:
             rowres=[0]*32
             k=itr
-            if self.list2[i2]==1:
-                i1=len(self.list1)-1
+            if list2[i2]==1:
+                i1=len(list1)-1
                 while i1>=0:
-                    rowres[k]=self.list1[i1]
+                    rowres[k]=list1[i1]
                     i1-=1
                     k-=1
                 result = self.add_binary(result,rowres)    
@@ -161,6 +167,39 @@ class BinaryArithmetic:
             return result    
 
         return self.__generate_2s_compliment(result)   
+
+    
+    def mod_binary(self,modVal):
+        pass
+
+
+    def factorial_binary(self,num=None):
+        """Performs Factorial on Binary Number"""
+
+        global list_
+        list_ = None
+        if(num == None):
+            num = self.num1
+            list_ = self.list1
+        else:
+            list_ = self.__convert_to_binary(num)
+
+        if(num == 0):
+            return self.__convert_to_binary(1)
+
+        if(num < 0):
+            print("Invalid Number for Factorial!")
+            return None
+        
+        result = self.__convert_to_binary(1)
+        for i in range(1,num+1):
+            result = self.multiply_binary(result,self.__convert_to_binary(i))
+
+        return result
+
+
+    def power_binary(self):
+        pass
 
 
     def convert_binary_to_decimal(self,list_):
@@ -203,6 +242,10 @@ def main():
     print("Performing Division:")
     result_divide = binary_math.divide_binary()
     print(result_divide,'\n')
+
+    print("Performing Factorial:")
+    result_fact = binary_math.factorial_binary()
+    print(result_fact,'\n')
 
 
  

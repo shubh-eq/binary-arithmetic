@@ -175,9 +175,9 @@ class BinaryArithmetic:
 
     def factorial_binary(self,num=None):
         """Performs Factorial on Binary Number"""
-
         global list_
         list_ = None
+
         if(num == None):
             num = self.num1
             list_ = self.list1
@@ -199,7 +199,19 @@ class BinaryArithmetic:
 
 
     def power_binary(self):
-        pass
+        """Performs num1^num2 on Binary Number"""
+        if(self.num2 == 0):
+            return 1
+        
+        if(self.num1 < 0):
+            return 0
+        
+        result = self.__convert_to_binary(1)
+
+        for i in range(self.num2):
+            result = self.multiply_binary(result,self.list1)
+        
+        return result
 
 
     def convert_binary_to_decimal(self,list_):
@@ -246,6 +258,10 @@ def main():
     print("Performing Factorial:")
     result_fact = binary_math.factorial_binary()
     print(result_fact,'\n')
+
+    print("Performing Power(a^b):")
+    result_pow = binary_math.power_binary()
+    print(result_pow,'\n')
 
 
  
